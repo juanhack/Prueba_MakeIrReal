@@ -1,0 +1,566 @@
+TEORIA GENERAL DE CSS
+
+Nos permite estilizar una pagina web
+
+Reglas para estilizar una pagina con CSS:
+
+1. Desde el HTML podemos agregar un atributo en linea asi: <h1 style="color: blue; font-size: 24px"> HOLA MUNDO </h1> */ no es recomendado por que se mezclan dos estructuras que den ser independientes.
+2. Desde el HTML dentro de la etiqueta <HEAD> podemos agregar la etiqueta <STYLE> en la cual escribiremos como se haria en un archivo CSS tradicional, sin embargo, sigue sindo inapropiado por mezclar dos estructuras que deben ser independientes.
+3. Para embeber en el HTML un archivo de CSS externo se debe hacer lo siguiente:
+    <head>
+        <link rel="stylesheet" href="./styles.css/>
+    </head>
+4. SELECTORES DE ESTILO
+
+Dentro del CSS se puede definir el estilado por medio del nombre de la etiqueta, por medio del nombre de su CLASE o por medio del nombre de su ID, asi:
+
+        h1{                     // por medio del nombre de la etiqueta.
+            color: blue;
+            font-size: 24px;
+            font-weight: bold;    
+        }
+
+        .nombre_clase{         // por medio del nombre de la clase 
+
+        }
+
+        #nombre_ID{            // por medio del nombre del ID
+
+        }
+
+Es importante alcarar que el orden anteriormente dado va de lo general a lo particular, y los estilos seran adoptados por el selector mas especifico.
+asi mismo, es posible combinar estos selectores, ejemplo:
+
+h1.nombre_clase{     // Esto aplicarar estilo a los elementos H1 que tengan clase = nombre_clase
+
+}
+
+h1, .container, #nombre_id{ // Esto aplicara estilo a todos los elementos que esten contenidos en los h1, en las clases .container y en los elementos de nombre_id
+
+}
+
+.nombre_clase p{  // este es un selector que permite dar estilo a los parrafos que sean descendientes (hijos, nietos, bisnietos, etc, etc) de la clase container... pero esto es para TODOS los parrafos
+
+}
+
+.nombre_clase > p { // este es un selector que permite dar estilo a los parrafos que sean descendientes directos (hijos) de la clase container.... solo los parrafos que se derivan de forma directa de la clase.
+
+}
+
+* { // este selector permite dar estilo directo a TODOS LOS ELEMENTOS DE LA PAGINA, sin embargo, no es recomendable hacer uso de este selector, por lo que se pierde control individual.
+Nota> es muy util para hacer un formateo de las caracteristicas fundamentales de la pagina, antes de comenzar a dar estilos, asi:
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+POR ULTIMO, Y NO MENOS IMPORTANTE, SE PUEDE DAR ESTILOS USANDO PSEUDO-CLASES, que permiten dar estilo segun el estado de este elemento, que dependen de las acciones del usuario que visita la pagina, ejemplo:
+la etiqueta de link
+
+a:link{ //formato cuando el link no ha sido visitado
+    color: blue;
+}
+
+a:visited { // formato del link cuando ya ha sido visitado
+    color: green;
+}
+
+a:hover { //formato cuando el usuario pasa el mouse por encima del link
+    color: yellow;
+}
+
+Asi mismo, las pseudo-clases hace posible dar estilo a los elementos dentro de cada etiqueta, segun el orden o posicion que este tenga.
+
+ejemplo
+
+p:first-child{ // Este le dara formato al primer elemento de tipo parrafo.
+
+}
+p:last-child{ // Este dara formato al ultimo elemento del tipo parrafo.
+
+}
+p:nth-child(2n):{ // En este caso es posible de forma matematica determinar que elementos sufriran el formato, para el ejemplo seran los elementos pares.
+
+}
+
+Tambien existen los PSEUDO-ELEMENTOS los que permite hacer modificaciones muyyyy especificas dentro de un elemento.
+ejemplo
+
+p::first-letter{ // esto modificara la primera letra del texto contenido en la etiqueta parrafo.
+
+}
+
+5.PARA CREAR Y ADMINISTRAR FONDOS
+
+    Para crear y administrar fondos, es necesario seguir estos pasos:
+
+    1. Dentro del HTML se debera crear un DIV y darle una clase 
+    <div class="prueba"> </div>
+
+    2. Dentro del archivo CSS es necesario realizar la configuracion de la clase 
+
+    .prueba{
+        /* primero es necesario darle un tamaño
+        width: 800px;
+        height: 400px;
+
+        /* ahora definimos un fondo
+        background-color: aquamarine;
+        background-image: url('./imagen.png'); /* si no se define cuantas veces debe aparecer la imagen, esta cubrira todo el tamano de la clase, sin embargo, si la imagen no es del tamano de la clase, la imagen se repetira las veces necesarias hasta cubrir el espacio.
+        background-repeat: no-repeat; /* esto para no repetir (repeat-y, para repetir en el eje y), (repeat-x, para repetir en el eje x)
+        /* esto me permite posisionar la imagen dentro del DIV, no solo acepta valores en porcentaje, el primer valor es en eje X y el segundo valor en eje Y. tambien es posible utilizar 50% solo para que centre la imagen, y pueden utilizarse palabras como top, left, rigth, bottom y center.
+        background-position: 10% 20%;
+        /* con esta opcion se ajusta el tamaño, se puede ajustar en eje x , y; colocando en pixeles en ese orden...tambien es posible utilizar las palabras CONTAIN = lo que agranda la imagen hasta que llegue al limite mas cercano; y la palabra COVER = la cual agrandara la imagen sin perder proporcion y de forma centrada hasta que cubra toda el area del contenedor.
+        background-size: cover;
+        /*para poder fijar una imagen cuando estamos haciendo scroll, en caso de no colocar esta caracteristica, el navegador recorrera toda la imagen.
+        background-attachment: fixed;
+
+        /*Todas las opciones anteriores se pueden definir en una sola linea de codigo, siguiendo esa secuencia.
+        background= aquamarine url('./imagen.png') no-repeat center center/cover fixed;
+    }
+
+
+6. ESTRUCTURA POR MODELO DE CAJA
+
+La estructura del modelo de caja esta compuesta de 4 partes o elementos puntuales:
+
+    1. Contenido> el cual se refiere al contenido de texto o imagen que se coloca entre las etiquetas.
+    2. Padding> es el espacio que existe entre el contenido y el borde de la caja.
+    3. Border> es un borde que separa el padding y la margen.
+    4. Margin> es la marguen que encierra a los 3 elementos anteriores y lo separa de los demas alementos del body.
+
+Para cambiar el tamaño del pading, del border o del margin; se puede hacer lo siguiente:
+
+Es una buena practica que se elimine el margin de todos los elementos contenidos en el body, esto se hacer declarando lo siguiente:
+body{
+    margin: 0px;
+}
+etiqueta{
+    padding: 5px 5px 5px 5px; /* en este caso se da tamaño individual asi: arriba, derecha, abajo, izquierda; sin embargo, si todos los tamaños son iguales basta con:
+    padding: 5px;
+    /* Sin embargo, si quiero darle un tamaño particular a alguno de los lados del padding puedo utilizar alguna de las siguientes opciones:
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+
+    border: 2px 2px 4px 4px;
+    /* los parametros que no son pixeles, determinan el tipo de linea y el color.
+    border: 2px solid black;
+    border-top: 2px dashed blue;
+    border-right: 3px dotted red;
+    border-bottom: 4px double yellow;
+    border-left: 5px solid green;
+
+    margin: 10px; /* sin embargo se puede portar igual que el padding.
+
+    /*para modificar los tamaños es necesario utilizar
+    width: 100px; // ancho
+    height: 100px; // alto
+
+}
+
+7. PARA ADMINISTRAR POSICIONAMIENTO
+
+    Para lograr administrar el posicionamiento de un contenedor se toma como ejemplo  lo siguiente:
+
+    1. Dentro del HTML, en el BODY declaramos un DIV dentro de un DIV, uno con clase CONTAINER y el otro con clase BOX, asi:
+
+<body>
+    <div class="container">
+        <div class="box">
+        
+        </div>
+    </div>
+</body>
+
+    2. Ahora es necesario hacer las respectivas configuraciones en el CSS, asi:
+
+.container{
+    width: 400px;
+    heigth: 400px;
+    /* cuando la position es RELATIVE, el objeto puede ser igualmente movido con top, left, right, bottom, en la cantidad de pixeles respecto de su posicion original de aparicion.
+    position: relative;
+}
+.box{
+    width: 100px;
+    heigth: 100px;
+    background-color: burlywood;
+    /* la opcion de POSITION nos permite determinar con respecto a que va a ser trabajada la posicion de este elementos, al determinar que es ABSOLUTE, 
+    podre determinar con las opciones bottom, left, rigth y top a cuantos pixeles debe estar, del elemento en orden ascendente de jeraquia, que contenga la POSITION = RELATIVE.
+    position: absolute;
+    top: 100px;
+    left: 100px;
+
+    /* al utilizar la opcion position FIXED el elemento tomara posicion respecto del elemento jerarquico ascendente que tenga position relative, 
+    o directamente de la ventana del navegador y quedar fijado enlas posiciones top, left, rigth or bottom que yo determine.
+
+    position: fixed;
+    top: 0px;
+
+}
+
+8. PARA ESTILAR SOMBRAS
+
+Existe la posibilidad de dar sombra a las cajas o contenedores (BOX SHADOW) y para dar sombra a los textos (TEXT SHADOW)
+
+    1. box shadow... tiene los siguientes parametros:
+        Posicion Horizontal
+            La posicion se dara por medio de PIXELES, si se pone una cifra negativa ira a la izquiera y una cifra positiva a la derecha.
+        Posicion Vertical
+            La posicion se dara por medio de PIXELES, si se pone una cifra negativa ira abajo y una cifra positiva arriba.
+        Difuminacion
+            A mayor sea la difuminacion mas borrosa sera la sombra (tambien en pixeles)
+        Propagacion
+            A mayor sea la propagacion mas grande sera la sombra. (tambien en pixeles)
+        Color
+            Se puede definir un colo.
+    
+    Forma de escritura:
+        box-shadow: PosHor PosVer Dif Prop Color;
+
+    ejemplo:
+    .nombre_clase{
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        box-shadow: 5px 5px 10px 15px #333;
+    }
+
+    2. text shadow... tiene los siguientes parametros:
+        Posicion Horizontal
+            La posicion se dara por medio de PIXELES, si se pone una cifra negativa ira a la izquiera y una cifra positiva a la derecha.
+        Posicion Vertical
+            La posicion se dara por medio de PIXELES, si se pone una cifra negativa ira abajo y una cifra positiva arriba.
+        Difuminacion
+            A mayor sea la difuminacion mas borrosa sera la sombra (tambien en pixeles)
+        Color
+            Se puede definir un colo.
+    
+    Forma de escritura:
+        text-shadow: PosHor PosVer Dif Color;
+
+    ejemplo:
+     .nombre_clase{
+        text-shadow: 3px 2px 3px red;
+    }
+
+9. GRADIENTES
+
+Esta es una forma de mezclar mas de un color dentro de una misma forma, dando un efecto estilizado y difuminado a la mezcla, para esto existen dos tipos de gradientes:
+Nota: para hacer uso de cualquiera de esto se debe pasar por medio de la propiedad background-image.
+    - GRADIENTE LINEAL
+    El metodo puede recibir dos o mas colores.
+       .nombre_clase{
+        width: 100px;
+        height: 100px;
+        /* Este es el caso por defecto, en el que se difumina del primer color en adelante de forma descendente.
+        background-image: linear-gradient(yellow, red);
+        /* Para cambiar la direccion, se debe poner como primer argumento la direccion que deberia tener(left, rigth, top), si seguiere ir en direccion de una esquina se debera colocar (top left, top rigth, bottom left, bottom rigth)
+        background-image: linear-gradient(to top left, yellow, red);
+        /* Para cambiar la direccion tambien es posible determinarlo en grados, con un numero entre 0deg y 360deg
+        background-image: linear-gradient(60deg, yellow, red);
+        /* Tambien es posible para dos o mas colores colocar cuanto del espacio ocupara cada color, esto en porcentaje, asi:
+        background-image: linear-gradient(60deg, yellow 20%, red 60%, blue 100%); // esto quiere decir que el color ira hasta ese porcentaje de la forma.
+
+        }
+    - GRADIENTE RADIAL
+    La funcion radial funciona muy similar a la lineal, con algunas modificaciones pequeñas:
+        .nombre_clase{
+        width: 100px;
+        height: 100px;
+        /*Por defecto situa el centro del radio, justo en el centro del elemento
+        background-image: radial-gradient(yellow, red);
+        /* Esta es la forma para establecer un centro ubicado en otro punto con cordenadas X y Y.
+        background-image: radial-gradient(at 20px 20px, yellow, red);
+        /*Tambien es posible seleccionar mas de dos colores y su porcentaje respectivo
+        background-image: radial-gradient(at 20px 20px, yellow 20%, red 60%, blue 100%);
+        }
+
+10. MEDIA QUERIES
+
+Nos permite aplicar estilos a diferentes dispositivos como dispositivos moviles, tablets, computadores de escritorio, etc.
+Y esta es la tecnica conocida como Responsive Design.
+
+Para el caso particular se realziaran los siguientes pasos:
+1. Es crear un elemento e incluirlo en una clase o en un Id;
+2. Dentro del Archivo CSS es necesario y recomendable comenzar configurando los dispositivos moviles de pantallas mas estandar, he ir luego incrementando-
+para hacer esto se comienza con las configuraciones estandar:
+.nombre_clase{
+    //Configuraciones por defecto que deben ser para moviles.
+}
+Luego se iran haciendo las confirguraciones en ascendente asi:
+@media (min-width: 768px) { // dentro de los parentesis se puede colocar tanto el ancho como el alto de la pantalla.
+    .nombre_clase{
+       //Configuraciones para ese tamaño de pantalla.
+    }
+}
+
+11. FLEXBOX
+
+Nos permite distribuir los elementos o items dentro de un contenedor usando la propiedad de CSS display flex.
+
+    1. Dentro del contenedor
+    Podemos aplicar las siguientes condiciones:
+        -Display
+        -Direction / para cambiar la direccion
+        -Wrap / para crear un salto de linea
+        -Alineación Horizontal. / para modificar la alineacion Horizontal
+        -Alienación Vertical / para modificar la alineacion Vertical
+    2. Para items
+    Para los items es posible cambiar:
+        -orden
+        -Espacios
+        -Tamaño
+
+justify-content {
+flex-start: Alinea elementos al lado izquierdo del contenedor.
+flex-end: Alinea elementos al lado derecho del contenedor.
+center: Alinea elementos en el centro del contenedor.
+space-between: Muestra elementos con la misma distancia entre ellos.
+space-around: Muestra elementos con la misma separación alrededor de ellos.
+}
+
+align-items {
+flex-start: Alinea elementos a la parte superior del contenedor.
+flex-end: Alinea elementos a la parte inferior del contenedor.
+center: Alinea elementos en el centro (verticalmente hablando) del contenedor.
+baseline: Muestra elementos en la línea base del contenedor.
+stretch: Elementos se estiran para ajustarse al contenedor.
+}
+
+flex-direction{
+row: Elementos son colocados en la misma dirección del texto.
+row-reverse: Elementos son colocados en la dirección opuesta al texto.
+column: Elementos se colocan de arriba hacia abajo.
+column-reverse: Elementos se colocan de abajo hacia arriba.
+}
+
+flex-direction{
+row: Elementos son colocados en la misma dirección del texto.
+row-reverse: Elementos son colocados en la dirección opuesta al texto.
+column: Elementos se colocan de arriba hacia abajo.
+column-reverse: Elementos se colocan de abajo hacia arriba.
+}
+
+A veces, invertir el orden de una fila o columna de un contenedor no es suficiente. En esos casos, 
+nosotros podemos aplicar la propiedad order a elementos individuales. Por defecto, los elementos tienen un valor 0, 
+pero nosotros podemos usar esta propiedad para establecerlo a un número entero positivo o negativo.
+
+flex-wrap{
+nowrap: Cada elemento se ajusta en una sola línea.
+wrap: los elementos se envuelven alrededor de líneas adicionales.
+wrap-reverse: Los elementos se envuelven alrededor de líneas adicionales en reversa.
+}
+
+align-content {
+flex-start: Las líneas se posicionan en la parte superior del contenedor.
+flex-end: Las líneas se posicionan en la parte inferior del contenedor.
+center: Las líneas se posicionan en el centro (verticalmente hablando) del contenedor.
+space-between: Las líneas se muestran con la misma distancia entre ellas.
+space-around: Las líneas se muestran con la misma separación alrededor de ellas.
+stretch: Las líneas se estiran para ajustarse al contenedor.
+}
+
+12. UNIDADES DE MEDIDA
+
+    > Unidades de Medida Absoluta: cm, mm, in, px, pt, pc. // se refieren a unidades de medida que se toman y se mantiene de forma literal.
+
+    > Unidades de Medida Relativa: vmax, em, rem, ch, ex, vmin, vw, vh. // se refiere a unidades de medida que se toman de manera relativa a determinado punto de referencia.
+
+
+TEMAS DE SEGUNDO NIVEL
+
+1. ARQUITECTURA CSS
+
+Para la administracion de proyectos complejos, es necesario mantener unas reglas de arquitectura, esto debido a la complejidad que significa administrar mas de 100 lineas de codigo.
+
+    Objetivos:
+        >Predecible: La regla que yo coloque debe ser y comportarse TAL CUAL como se establecio y diseño.
+        >Reutilizable: Es importante optimizar, en la medida de los posible, la totalidad de los disenios... lo que significa que no deberia estar repitiendo la escritura de un mismo estilo, en tanto pueda hacer reutilizable el mismo codigo.
+        >Mantenible: El codigo se debe organizar de tal forma, ya sea en multiples archivos, o haciendo uso de comentarios y ordenacion que pemrita hacer mantenible el codigo a travez del tiempo.
+        >Escalable: Aunado al criterio anterior, sin importar el tamaño o crecimiento del proyecto, el codigo no se hara imposible de administrar; por lo tanto podra crecer indefinidamente a travez del tiempo.
+    
+    Buenas Practicas:
+
+        >Establecer Reglas:
+        >Explicar la estructura BASE:
+        >Establecer Estandares de Codificacion:
+        >Evitar largas hojas de estilo:
+        >Documentacion:
+
+    arquitecturas:
+    
+    >OOCSS: CSS Orientado a Objetos, en el que se determina separar el diseño del contenido.
+    >BEM: Bloq Elemment Modified, en esta estructura se separan los bloques, los elementos y los modificadores asi:
+        <body>
+            <header class="header">
+                <button class="header__button--red">RED</button> // en este caso se puede identificar el BLOQUE(header), el ELEMENTO(button) y el elemento MODIFICADOR (red).
+                <button class="header__button--yellow">YELLOW</button>
+            </header>
+        </body>
+    >SMACSS: Arquitectura de CSS Escalable y Modular, quien diseño dicha arquitectura se encargo de subdividir la arquitectura asi:
+        - Base: Se compone de elementos que seran utilizados en la aplicacion, ejemplo(botones)
+        - Layout: Son elementos que se utilizan en la pagina UNA SOLA VEZ.
+        - Module: Son elementos que se utilizan mas de una vez.
+        - State: Son los cambios que pueden sufrir algunos elementos dentro de la aplicacion.
+        - Theme: Se aplican cuando se desenia mas de un tema para toda la pagina.
+    >ITCSS: Triangulo Invertido de CSS, requiere de una gerarquia en la que va de los particular a lo general.
+    >ATOMIC DESING: Este es un modelo que habla de atomos, moleculas, organismos, entendiendo esto de forma muy similar al anterior, va desde lo mas especifico hasta lo mas general.
+
+    Componentes:
+
+    Los componentes se refieren al proceso de identificar de forma particular cada uno de los elementos que COMPONEN el diseño, entendiendo como 
+    interacturan con el diseño general y tratando de agrupar los que sean homgeneos.
+        >Para poder llevar una buena traza de dicha identificacion es recomendable utilizar History Books.
+
+2. CSS GRID
+
+A diferencia de FLEXBOX, es necesario inicializar el conteneder en GRID, esto se hace colocando la siguiente propiedad: (display: grid)
+luego de eso es necesario configurar la cuadricula, segun la cantidad de filas y columnas que se requiera y su respectivo tamaño.
+
+Dentro de las definciones del TEMPLATE es posible utilizar una nueva unidad de medida denominada FR (fraccion), un ejemplo practico seria:
+grid-template-columns: 1fr 3fr; lo que significa que el espacio sera dividido en 4 partes iguales y la primera columna sera del tamaño de 1/4 y la segunda es de 3/4.
+sin embargo, si dentro de la definicion utiliza mas de una unidad de medida, al utilizar la unidad FR, esta dividira el espacio restante.
+
+ grid-template-columns{
+    Esta propiedad recibe tanto unidades absolutas como unidades relativas.
+    En esta se debe definir la cantidad de columnas que tendra el contenedor.
+    Un ejemplo de definicion es el siguiente:
+    grid-template-columns: 20% 20% 20% 20% 20%; /esto definira un total de 5 columnas de un tamanio igual entre ellas, estas unidades relativas permiten un diseño responsivo.
+    Esto puede ser simplificado de la siguiente manera:
+    grid-template-columns: repeat(5,20%);
+    Tambien es posible utilizar mas de un tipo de unidad de medida dentro de la misma definicion, ejemplo:
+    grip-template-columns: 100px 3em 40%
+ }
+ grid-template-rows{
+    Esta propiedad recibe tanto unidades absolutas como unidades relativas.
+    En esta se debe definir la cantidad de filas que tendra el contenedor.
+    Un ejemplo de definicion es el siguiente:
+    grid-template-rows: 20% 20% 20% 20% 20%; /esto definira un total de 5 filas de un tamanio igual entre ellas, estas unidades relativas permiten un diseño responsivo.
+
+ }
+
+grid-template{
+    Esta es la forma abreviada de definir la distribucion tanto de filas como de columnas.
+    Dicha propiedad se define de la siguiente manera:
+    grid-template: grid-template-rows / grid-template-columns.
+}
+
+/ESTO ES PARA DETERMINAR CUANTAS COLUMNAS Y FILAS OCUPARA UN DETERMINADO ELEMENTO
+ grid-column-start{
+    Esta propiedad recibe un numero el cual posicionara el elmento en su cuadricula inicial.
+ }
+ grid-column-end{
+    Si bien la propiedad START, por defecto solo abarca la una posicion de una sola celda, con esta propiedad es posible abarcar la cantidad de columnas que van desde START hasta END.
+    Esta propiedad tambien recibe numeros negativos para ir en reversa.
+    siempre debe ser un numero mas del que se quiere cubrir.
+    tambien es posible definir el tamaño utilizando la palabra SPAN, acompañada del numero de columnas que cubrira, es importante aclarar que span solo recibe valores positivos.
+    ejemplo: grid-column-end: span 2; esto hara que se cubra un total de dos columnas.
+ }
+ grid-column{
+     Esta propiedad recibe de forma abreviada las dos propiedades anteriormente descritas asi:
+     grid-column: start / end; (tambien recibe la palabra reservada SPAN)
+
+ }
+
+ grid-row-start / grid-row-end{
+     Estas dos propiedades se comportan igual que sus homologas pero en terminos de FILAS.
+ }
+
+ grid-row{
+     Funciona igual que GRID-COLUMN pero en terminos de filas.
+ }
+
+grid-area{
+    Admite cuatro valores separados por barras oblicuas: 
+    grid-row-start / grid-column-start / grid-row-end / grid-column-end.
+}
+
+/ DENTRO DE LOS AJUSTES DE ITEMS PARTICUALRES
+
+order{
+    permite posicionar elementos de forma exacta, recibe valores tanto positivios como negativos;
+}
+
+
+// PEPROCESADORES DE CSS
+
+Son aquellas librerias o frameworks que permiten crear estilos, transiciones y animaciones de CSS de una forma mas rapida y robusta.
+
+Para el curso se hara uso del prepocesador SASS
+    - Instalacion
+        > Si utiliza Node.js, debo ir a la linea de comando y utilizar el comnado: npm install -g sass
+    
+    - Configuracion de proyectos
+
+        > Debo ubicarme en la carpeta de estilos del proyecto y renombrar la extension del o los archivos de estilos, de .css a .scss
+        > luego tengo que ir a la consola y si no estoy parado dentro de la carpeta debo colocar la ruta, pero si ya me encuentro ubicado en la ruta
+        basta con utilizar el siguiente comando: sass nombre_archivo.scss nombre_archivo.css; esto con el fin de que se creen los estilos en un archivo 
+        que es interpretable por el navegador (se crearan dos archivo asi: nombre_archivo.css y nombre_archivo.css.map).
+
+    - VARIABLES 
+    
+    Son clases o elementos que una vez definidas, se pueden requerir en mas de un lugar de la aplicacion.
+    ejemplo:
+        si se define un COLOR: WHITE; y este estilo se requiere en varios puntos, debo definir una variable que se llame Color_Blanco o Blanco y guardar en esta
+        el estilo que se requiere, para que cuando se invoque la variable, se pueda sobre entender que se esta solicitando este estilo.
+
+    $blanco: white;
+
+    luego---
+
+    color: $blanco;
+
+    Nota: si se llega a hacer un cambio en el archivo .scss es necesario volver a compilar el codigo.
+
+    - HERENCIA 
+    
+    Ya que un mismo tipo de estilo se puede escribir en mas de una clase, se recomienda utilizar la propiedad de herencia, lo que requiere de crear
+    una clase independiente que contenga los estilos que se utilizaran mas de una vez... y posteriormente utilizar dicho codigo en los lugares necesarios asi:
+
+        -.nombre_clase_reusable{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        -.nombre_clase_donde_se_usara{
+            @extend .nombre_clase_reusable;
+        }
+
+    - MIXINS
+
+    Es similar a la herencia, sin embargo, tiene las siguientes diferencias en sintaxis asi:
+
+        1. @mixin nombre_clase_reusable{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        2. .nombre_clase_donde_se_usara{
+            @include nombre_clase_reusable;
+        }
+
+    - ANIDAMIENTO
+
+    Es posible que dentro de la definicion de una misma clase, se puedan estilar de forma particular los estilos de cada uno de los elementos que 
+    se consideren hijos, asi:
+
+    .nombre_clase{
+
+        font-size: 14px;
+
+        a {
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            text-decoration: none;
+        }
+    }
+
+    - OPERADORES
+
+    -
